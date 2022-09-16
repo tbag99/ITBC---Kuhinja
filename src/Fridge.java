@@ -10,9 +10,7 @@ public class Fridge {
 
     public static  void addIngredient(WeightedIngredient x){
 
-
-           ingredient.put(x.getIngredientName(),x);
-        }
+ingredient.put(x.getIngredientName(), x);}
 
 
     public static boolean canUMake(Recipe r)
@@ -45,10 +43,7 @@ public class Fridge {
     }
     public void removeIngredient(WeightedIngredient x)
     {
-        if(ingredient.containsKey(x.getIngredientName()))
-        {
-          ingredient.remove(x.getIngredientName());
-        }
+        ingredient.remove(x.getIngredientName());
     }
 
 
@@ -65,8 +60,10 @@ public class Fridge {
         }
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Fridge{}" + getIngredients().values().toString();
+    }
 }
 
 

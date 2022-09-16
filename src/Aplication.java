@@ -23,9 +23,9 @@ public class Aplication {
             System.out.print("7: Napravi sva moguca jela skalirana za 50% \n");
             System.out.print("8: Koja sve jela mogu da se naprave za X dinara \n");
             System.out.print("9: Provera koja su sve jela X tezine \n");
-         //   System.out.print("10: Kombinacija uslova 8 i 9 \n");
-         //   System.out.print("11: Sortiraj recepte po tezini \n");
-          //  System.out.print("12: Sortiraj recepte po ceni \n");
+          System.out.print("10: Kombinacija uslova 8 i 9 \n");
+            System.out.print("11: Sortiraj recepte po tezini \n");
+            System.out.print("12: Sortiraj recepte po ceni \n");
 
             System.out.print("13: Omiljeni recepti  \n");
 
@@ -38,6 +38,7 @@ public class Aplication {
 
                 var ingredient = Database.getIngredient(sc.next());
                 fridge.addIngredient(ingredient);
+                System.out.println(fridge);
 
             }
 
@@ -48,11 +49,14 @@ public class Aplication {
                 System.out.println("Unesite kolicinu za koliko zelite da smanjite ");
                 double x = sc.nextDouble();
                 fridge.lowerWeightOfIngredient(x,ingredient.getIngredientName());
+                System.out.println(fridge);
             }
 
             if (option == 3) {
                 System.out.println("Unesite ime namirnice koju zelite da uklonite");
                 var ingredient = Database.getIngredient(sc.next());
+                fridge.removeIngredient(ingredient);
+                System.out.println(fridge);
 
 
             }
@@ -74,8 +78,8 @@ public class Aplication {
                 }
             }
             if (option == 7) {
-                ArrayList<Recipe> madeMeals = new ArrayList<Recipe>();
-                ArrayList<Recipe> scaledRecipes = new ArrayList<Recipe>();
+                ArrayList<Recipe> madeMeals = new ArrayList<>();
+                ArrayList<Recipe> scaledRecipes = new ArrayList<>();
                 var recipes = Database.getAllRecipes();
                 for (Recipe recipe : recipes) {
                     scaledRecipes.add(recipe.scaledRecipe(50));
@@ -86,7 +90,7 @@ public class Aplication {
                     }
                 }
                 if (madeMeals.size() > 0) {
-                    System.out.println("Napravljena jela su: ");
+                    System.out.println("Napravljena jela: ");
                     for (Recipe recipe : madeMeals) {
                         System.out.println(Database.writeRecipe());
                     }
@@ -104,15 +108,37 @@ public class Aplication {
                 }
             }
             if (option == 9) {
-                System.out.println("Unesite tezinu jela : Beginner Easy Medium Hard Pro ");
-                String c = sc.next();
+                System.out.println("Unesite tezinu jela : Beginner(0)  Easy(1)  Medium(2) Hard(3) Pro(4) ");
+                int diff = sc.nextInt();
                 var recipes = Database.getAllRecipes();
                 System.out.println("jela sa datom tezinom su ");
                 for (Recipe recipe : recipes) {
-                    if (recipe.getRecipeLevel().equals(c)) {
+                    if (recipe.getRecipeLevel().val == diff) {
                         System.out.println(recipe);
                     }
                 }
+            }
+
+
+            if(option == 10) {
+                System.out.println("Unesite zeljenu tezinu Beginner(0)  Easy(1)  Medium(2) Hard(3) Pro(4) ");
+                int diff = sc.nextInt();
+                System.out.println("Unesite zeljenu cenu");
+                double price = sc.nextDouble();
+                var recipes = Database.getAllRecipes();
+                System.out.println("jela sa datom tezinom i  cenom su  ");
+                for (Recipe recipe : recipes) {
+                    if (recipe.getRecipeLevel().val == diff && recipe.getPrice() < price) {
+                        System.out.println(recipe);
+                    }
+                }
+            }
+            if(option == 11){
+                Database.sortedByDiff();
+            }
+
+            if(option == 12){
+                Database.sortedByPrice();
             }
 
 
@@ -121,8 +147,11 @@ public class Aplication {
                 System.out.print("15: Sklonite recept iz omiljenih recept \n");
                 option = sc.nextInt();
                 if (option == 14) {
-                    var allRecepies = Database.getAllRecipes();
+                    System.out.println(Database.getAllRecipes());
+                    System.out.println("Izaberite ime recepta koji zelite da dodate");
                     String s = sc.next();
+                    var allRecepies = Database.getAllRecipes();
+
                     for (var r : allRecepies) {
                         if (r.getRecipeName().equalsIgnoreCase(s)) {
                             Database.addFavoriteRecipe(r);
@@ -134,6 +163,8 @@ public class Aplication {
                 }
                 if (option == 15) {
                     var allRecepies = Database.getAllRecipes();
+                    System.out.println(Database.getAllRecipes());
+                    System.out.println("Izaberite ime recepta koji zelite da uklonite");
                     String s = sc.next();
                     for (var r : allRecepies) {
                         if (r.getRecipeName().equalsIgnoreCase(s)) {
@@ -146,13 +177,17 @@ public class Aplication {
 
 
                 }
+
+
+
+                }
                 if (option == 0) {
                     break;
                 }
             }
         }
     }
-}
+
 
 
 

@@ -1,13 +1,17 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 public class Recipe implements Priceable {
 
     enum RecipeLevel {
-        BEGINNER, EASY, MEDIUM, HARD, PRO
+        BEGINNER(0), EASY(1), MEDIUM(2), HARD(3), PRO(4) ;
+        final int val;
+        RecipeLevel(int val) { this.val = val; }
+        }
 
-    }
+
 
     private String recipeName;
     //  private int recipeID;
@@ -105,6 +109,10 @@ public class Recipe implements Priceable {
         }
         return sum;
     }
+
+
+
+
 
     @Override
     public String toString() {
